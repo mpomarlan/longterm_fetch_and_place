@@ -55,6 +55,7 @@
                gazebo-perception-process-module
                attache_msgs-srv
                pr2_controllers_msgs-msg
+               prac2cram
                ;;cram-giskard-manager ;; Commented out as giskard is not used atm
                )
   :components

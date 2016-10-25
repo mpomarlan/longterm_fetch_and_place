@@ -69,6 +69,40 @@
         (beliefstate:extract-files))
       (roslisp:ros-info (ltfnp) "Done with LTFnP"))))
 
+;;;
+;;; Entry Point (for pracsim)
+;;;
+
+(defun perform-ltfnp ()
+  (with-process-modules-simulated
+    (fetch-and-place-instance :variance (yason:parse "{}"))))
+
+(defun perform-ltfnp-get-args (&rest args)
+  (declare (ignore args))
+  (values 0
+          nil
+          "Will now set the table."
+          "(perform-ltfnp)"))
+
+(defparameter *pracsimserver-plan-matchings*
+              (list (cons "set-table" (list #'perform-ltfnp #'perform-ltfnp-get-args))))
+
+(defun start-cram (&key (logged nil))
+  (beliefstate:enable-logging nil)
+  (do-init t :headless t :variance (yason:parse "{}"))
+  (beliefstate:enable-logging logged)
+  (setf beliefstate::*enable-prolog-logging* logged)
+  ;;(semantic-map-collision-environment:publish-semantic-map-collision-objects)
+  (prac2cram:prac2cram-server *pracsimserver-plan-matchings*)
+  (let* ((a 1) (b 1) (s 1))
+    (loop
+      (let ((c (rem (+ a b) 97)))
+        (roslisp:wait-duration 1)
+        (format t "Tick-tock ~a: ~a.~%" s c)
+        (setf s (+ s 1))
+        (setf a b)
+        (setf b c)))))
+
 
 ;;;
 ;;; Top-Level Plans
