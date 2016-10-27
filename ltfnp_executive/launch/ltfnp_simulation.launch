@@ -10,6 +10,8 @@
   <include file="$(find ltfnp_gazebo)/launch/ltfnp.launch">
     <arg name="GAZEBO_GUI" value="$(arg NOT_HEADLESS)"/>
   </include>
+
+  <param name="robot_description_nocol" textfile="$(find ltfnp_models)/models/pr2.urdf"/>
   
   <node name="static_world_frame" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 map odom_combined 100" />
   
