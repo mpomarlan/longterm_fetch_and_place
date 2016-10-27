@@ -15,6 +15,10 @@
   
   <node name="static_world_frame" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 map odom_combined 100" />
   
+  <!-- Web-related nodes for visualization in browser -->
+  <node name="tf2_web_republisher" pkg="tf2_web_republisher" type="tf2_web_republisher" args="" respawn="true" output="screen" />
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
+
   <include file="$(find pr2_moveit_node)/launch/move_group.launch"/>
   <include file="$(find pr2_moveit_node)/launch/nav_pcontroller.launch"/>
   
